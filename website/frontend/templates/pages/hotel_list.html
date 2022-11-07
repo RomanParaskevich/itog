@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="hotels-main width-container">
+      <h1 class="visually-hidden">Выбор гостиницы в Седоне</h1>
+      <section class="parameters-form">
+        <h2 class="visually-hidden">Фильтр параметров поиска</h2>
+        <form class="filter" method="get" action="#">
+          <fieldset class="filter-item">
+            <legend>Инфраструктура:</legend>
+              <ul>
+                <li class="filter-checkbox">
+                  <input class="visually-hidden filter-input-checkbox filter-input" type="checkbox" name="swimming_pool" id="filter-pool" checked>
+                  <label for="filter-pool">Бассейн</label>
+                </li>
+                <li class="filter-checkbox">
+                  <input class="visually-hidden filter-input-checkbox filter-input" type="checkbox" name="parking" id="filter-parking">
+                  <label for="filter-parking">Парковка</label>
+                </li>
+                <li class="filter-checkbox">
+                  <input class="visually-hidden filter-input-checkbox filter-input" type="checkbox" name="wi_fi" id="filter-wi-fi">
+                  <label for="filter-wi-fi">wi-fi</label>
+                </li>
+              </ul>
+          </fieldset>
+          <fieldset class="filter-item">
+            <legend>Тип жилья:</legend>
+              <ul>
+                <li class="filter-checkbox">
+                  <input class="visually-hidden filter-input-checkbox filter-input" type="checkbox" name="hotel" id="filter-hotel" checked>
+                  <label for="filter-hotel">Гостиница</label>
+                </li>
+                <li class="filter-checkbox">
+                  <input class="visually-hidden filter-input-checkbox filter-input" type="checkbox" name="motel" id="filter-motel" checked>
+                  <label for="filter-motel">Мотель</label>
+                </li>
+                <li class="filter-checkbox">
+                  <input class="visually-hidden filter-input-checkbox filter-input" type="checkbox" name="apartments" id="filter-apartments" checked>
+                  <label for="filter-apartments">Апартаменты</label>
+                </li>
+              </ul>
+          </fieldset>
+          <fieldset class="filter-item">
+            <legend>Стоимость в сутки (р):</legend>
+              <div class="range-filter">
+                <div class="price-controls">
+                  <label class="min-price" aria-label="введите минимальное значение">
+                     <input type="text" name="min_price" placeholder="от 0">
+                  </label>
+                  <label class="max-price" aria-label="введите максимальное значение">
+                     <input type="text" name="max_price" placeholder="до 3000">
+                  </label>
+                </div>
+              </div>
+              <button type="submit" class="button filter-button">Показать</button>
+          </fieldset>
+        </form>
+      </section>
+
+      <section class="search-results">
+        <h2 class="visually-hidden">Результаты поиска</h2>
+        <div class="results-sort">
+          <div class="results-sum">
+            <p>Найдено:</p>
+            <div class="results-sum-value">3</div>
+          </div>
+          <div class="sort-controls">
+            <h3>Сортировка:</h3>
+            <div class="sort-parameters">
+              <button onclick="filters(this)" data-parametr-name="ordering" data-parametr-value="price" class="button sort-parameters-button current" type="button">По цене</button>
+              <button onclick="filters(this)" data-parametr-name="ordering" data-parametr-value="type" class="button sort-parameters-button" type="button">По типу</button>
+              <button onclick="filters(this)" data-parametr-name="ordering" data-parametr-value="rating" class="button sort-parameters-button" type="button">По рейтингу</button>
+            </div>
+          </div>
+        </div>
+        <ul class="results-list">
+          {% for object in paginated_object_list %}
+          <li class="results-item">
+            <a class="hotel-photo" href="#">
+              <img src="{{ object.image.url }}" width="135" height="90" alt="Гостиница у подножия красных скал во время заката">
+            </a>
+            <div class="results-description">
+              <h3><a class="hotel-name" href="zaglushka">{{ object.title }}</a></h3>
+              <div class="hotel-characteristics">
+                <p>{{ object.hotel_type }}</p>
+                <p>От {{ object.min_price }} Р.</p>
+              </div>
+              <div class="results-buttons">
+                <a class="button button-info" href="zaglushka">Подробнее</a>
+                <button class="button button-reserv" type="button" name="reserv">Забронировать</button>
+              </div>
+            </div>
+            <div class="results-rating">
+              <span class="visually-hidden">У отеля {{ object.stars }} звезды</span>
+              <ul class="rating-list">
+                {{ object.stars|safe }}
+              </ul>
+              <p class="rating-value">Рейтинг: {{ object.rating }}</p>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+        <ul class="pagination">
+          {% include 'include/pagination.html' %}
+        </ul>
+      </section>
+    </main>
+<br><br><br><br>
+
+
+{% endblock %}

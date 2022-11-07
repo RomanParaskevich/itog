@@ -1,0 +1,14 @@
+
+{% load static %}
+
+<header class="width-container">
+      <nav class="main-navigation">
+        <a class="main-header-logo" href="/">
+          <img src="{% static 'img/logo.svg' %}" width="138" height="70" alt="Логотип сайта Седона. City of Sedona.">
+        </a>
+        <ul class="site-navigation">
+            {% include 'menus/header_menu.html' with menu=menus.header_menu %}
+        </ul>
+      </nav>
+    </header>
+
